@@ -4,22 +4,26 @@ Class {
 	#instVars : [
 		'nodeHash',
 		'lastTimeEntered',
-		'totalTime'
+		'totalTime',
+		'callTimes'
 	],
 	#category : #MethodProfiler
 }
 
 { #category : #'method flow' }
 PrfLiveNode >> enteringNode [
-	lastTimeEntered := DateAndTime now
+	lastTimeEntered := Time primUTCMicrosecondsClock
 ]
 
 { #category : #'method flow' }
 PrfLiveNode >> exitingNode [
 	"Manage the case of the root unknown node"
+	| timeOfCall |
 	lastTimeEntered ifNil: [ ^ self ].
 
-	totalTime := totalTime + (DateAndTime now - lastTimeEntered).
+	timeOfCall := (Time primUTCMicrosecondsClock - lastTimeEntered) max: 1.
+	"callTimes add: timeOfCall."
+	totalTime := totalTime + timeOfCall.
 	lastTimeEntered := nil 
 ]
 
@@ -27,7 +31,8 @@ PrfLiveNode >> exitingNode [
 PrfLiveNode >> initialize [
 
 	super initialize.
-	totalTime := 0 seconds
+	totalTime := 0.
+	callTimes := OrderedCollection new
 ]
 
 { #category : #accessing }

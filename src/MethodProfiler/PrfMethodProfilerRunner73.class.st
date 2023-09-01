@@ -1,5 +1,5 @@
 Class {
-	#name : #PrfMethodProfilerRunner,
+	#name : #PrfMethodProfilerRunner73,
 	#superclass : #Object,
 	#instVars : [
 		'intercepters',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-PrfMethodProfilerRunner class >> newForMethods: aSetOfMethods [
+PrfMethodProfilerRunner73 class >> newForMethods: aSetOfMethods [
 
 	^ self new
 		  methods: aSetOfMethods;
@@ -19,7 +19,7 @@ PrfMethodProfilerRunner class >> newForMethods: aSetOfMethods [
 ]
 
 { #category : #initialization }
-PrfMethodProfilerRunner >> destroy [
+PrfMethodProfilerRunner73 >> destroy [
 
 	intercepters do: [ :intercepter | intercepter uninstall ].
 	intercepters removeAll.
@@ -27,7 +27,7 @@ PrfMethodProfilerRunner >> destroy [
 ]
 
 { #category : #'method flow' }
-PrfMethodProfilerRunner >> enterMethod: aMethod [
+PrfMethodProfilerRunner73 >> enterMethod: aMethod [
 
 	| node precedingNode |
 	callStack ensureStackIsInitialized.
@@ -42,13 +42,13 @@ PrfMethodProfilerRunner >> enterMethod: aMethod [
 ]
 
 { #category : #'method flow' }
-PrfMethodProfilerRunner >> exitMethod: aMethod [
+PrfMethodProfilerRunner73 >> exitMethod: aMethod [
 
 	callStack pop exitingNode
 ]
 
 { #category : #initialization }
-PrfMethodProfilerRunner >> initialize [
+PrfMethodProfilerRunner73 >> initialize [
 	result := PrfMethodProfilerResult new.
 	callStack := PrfProcessCallStack newWithRunner: self.
 	intercepters := Dictionary new.
@@ -56,20 +56,20 @@ PrfMethodProfilerRunner >> initialize [
 ]
 
 { #category : #accessing }
-PrfMethodProfilerRunner >> isProfilingNow [
+PrfMethodProfilerRunner73 >> isProfilingNow [
 
 	^ profilingNow
 ]
 
 { #category : #adding }
-PrfMethodProfilerRunner >> methods: aSetOfMethods [
+PrfMethodProfilerRunner73 >> methods: aSetOfMethods [
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ]) do: [
-		:method | intercepters at: method put: (PrfMethodIntercepter newForMethod: method withRunner: self)].
+		:method | intercepters at: method put: (PrfMethodIntercepter73 newForMethod: method withRunner: self)].
 	result methods: aSetOfMethods 
 ]
 
 { #category : #lifecycle }
-PrfMethodProfilerRunner >> profile: aBlock [
+PrfMethodProfilerRunner73 >> profile: aBlock [
 
 	self start.
 	aBlock ensure: [ self stop ].
@@ -78,18 +78,18 @@ PrfMethodProfilerRunner >> profile: aBlock [
 ]
 
 { #category : #initialization }
-PrfMethodProfilerRunner >> reset [ 
+PrfMethodProfilerRunner73 >> reset [ 
 	result := PrfMethodProfilerResult new.
 ]
 
 { #category : #accessing }
-PrfMethodProfilerRunner >> result [
+PrfMethodProfilerRunner73 >> result [
 
 	^ result
 ]
 
 { #category : #lifecycle }
-PrfMethodProfilerRunner >> start [
+PrfMethodProfilerRunner73 >> start [
 	
 	result mainProcess: thisProcess.
 	intercepters do: [ :intercepter | intercepter install ].
@@ -98,7 +98,7 @@ PrfMethodProfilerRunner >> start [
 ]
 
 { #category : #lifecycle }
-PrfMethodProfilerRunner >> stop [
+PrfMethodProfilerRunner73 >> stop [
 
 	result rootNode exitingNode.
 	intercepters do: [ :intercepter | intercepter uninstall ].

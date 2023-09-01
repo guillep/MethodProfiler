@@ -58,6 +58,19 @@ PrfMethodProfiler >> addPackage: aPackage [
 ]
 
 { #category : #'as yet unclassified' }
+PrfMethodProfiler >> createDelayedRunner [
+
+	lastRunner ifNotNil: [
+		lastRunner isProfilingNow ifTrue: [
+			^ Error signal: 'The last profiling is still running' ].
+		lastRunner destroy ].
+
+	lastRunner := PrfMethodProfilerDelayedRunner newForMethods: methods.
+	runners add: lastRunner.
+	^ lastRunner
+]
+
+{ #category : #'as yet unclassified' }
 PrfMethodProfiler >> createRunner [
 
 	lastRunner ifNotNil: [
@@ -66,6 +79,19 @@ PrfMethodProfiler >> createRunner [
 		lastRunner destroy ].
 
 	lastRunner := PrfMethodProfilerRunner newForMethods: methods.
+	runners add: lastRunner.
+	^ lastRunner
+]
+
+{ #category : #'as yet unclassified' }
+PrfMethodProfiler >> createRunner: aRunnerClass [
+
+	lastRunner ifNotNil: [
+		lastRunner isProfilingNow ifTrue: [
+			^ Error signal: 'The last profiling is still running' ].
+		lastRunner destroy ].
+
+	lastRunner := aRunnerClass newForMethods: methods.
 	runners add: lastRunner.
 	^ lastRunner
 ]

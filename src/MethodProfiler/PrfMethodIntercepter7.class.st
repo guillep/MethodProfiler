@@ -1,5 +1,5 @@
 Class {
-	#name : #PrfMethodIntercepter,
+	#name : #PrfMethodIntercepter7,
 	#superclass : #MpHandler,
 	#instVars : [
 		'method',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #creation }
-PrfMethodIntercepter class >> newForMethod: aMethod withRunner: aRunner [
+PrfMethodIntercepter7 class >> newForMethod: aMethod withRunner: aRunner [
 
 	^ self new
 		  method: aMethod;
@@ -19,57 +19,57 @@ PrfMethodIntercepter class >> newForMethod: aMethod withRunner: aRunner [
 ]
 
 { #category : #evaluating }
-PrfMethodIntercepter >> afterMethod [
+PrfMethodIntercepter7 >> afterMethod [
 
 	runner exitMethod: method
 ]
 
 { #category : #evaluating }
-PrfMethodIntercepter >> beforeMethod [
+PrfMethodIntercepter7 >> beforeMethod [
 
 	runner enterMethod: method
 ]
 
 { #category : #installation }
-PrfMethodIntercepter >> install [
+PrfMethodIntercepter7 >> install [
 
 	proxy ifNil: [
-		proxy := MpMethodProxy72 onMethod: method handler: self.
+		proxy := MpMethodProxy7 onMethod: method handler: self.
 		proxy install ]
 ]
 
 { #category : #accessing }
-PrfMethodIntercepter >> method [
+PrfMethodIntercepter7 >> method [
 
 	^ method
 ]
 
 { #category : #accessing }
-PrfMethodIntercepter >> method: anObject [
+PrfMethodIntercepter7 >> method: anObject [
 
 	method := anObject
 ]
 
 { #category : #accessing }
-PrfMethodIntercepter >> proxy [
+PrfMethodIntercepter7 >> proxy [
 
 	^ proxy
 ]
 
 { #category : #accessing }
-PrfMethodIntercepter >> runner [
+PrfMethodIntercepter7 >> runner [
 
 	^ runner
 ]
 
 { #category : #accessing }
-PrfMethodIntercepter >> runner: anObject [
+PrfMethodIntercepter7 >> runner: anObject [
 
 	runner := anObject
 ]
 
 { #category : #installation }
-PrfMethodIntercepter >> uninstall [
+PrfMethodIntercepter7 >> uninstall [
 	proxy ifNotNil: [ 
 		proxy uninstall.
 		proxy := nil ]
