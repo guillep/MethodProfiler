@@ -41,7 +41,7 @@ PrfMethodProfilerDelayedRunner >> enterMethod: aMethod [
 	next < array size ifTrue: [
 		array at: current put: true.
 		array at: current + 1 put: aMethod.
-		array at: current + 2 put: Time primUTCMicrosecondsClock.
+		array at: current + 2 put: self highResClock.
 		^ self ].
 	
 	"Should grow! Allocate a new array and retry"
@@ -55,12 +55,10 @@ PrfMethodProfilerDelayedRunner >> exitMethod: aMethod [
 	"Reserve the method, status and timestamp slots"
 	| current |
 	current := next.
-	next := next + 3.
+	next := next + 1.
 	
 	next < limit ifTrue: [
-		array at: current put: false.
-		array at: current + 1 put: aMethod.
-		array at: current + 2 put: Time primUTCMicrosecondsClock.
+		array at: current put: self highResClock.
 		^ self ].
 	
 	"Should grow! Allocate a new array and retry"
@@ -72,10 +70,19 @@ PrfMethodProfilerDelayedRunner >> exitMethod: aMethod [
 PrfMethodProfilerDelayedRunner >> grow [
 	
 	"Should grow! Allocate a new array and retry"
-	array := Array new: array size * 2.
+	array := Array new: array size.
 	limit := array size.
 	next := 1.
 	arrays add: array
+]
+
+{ #category : #'method flow' }
+PrfMethodProfilerDelayedRunner >> highResClock [	"Smalltalk highResClock"
+	"Primitive. Answer the value of the high resolution clock if this computer has one.
+	Usually, this should be the highest resolution value available, for example on Intel
+	it will be the value of the time stamp counter register."
+	<primitive: 'primitiveHighResClock'>
+	^0
 ]
 
 { #category : #initialization }
